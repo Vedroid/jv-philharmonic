@@ -6,32 +6,32 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import ua.vedroid.cinema.dao.MovieDao;
+import ua.vedroid.cinema.dao.CinemaHallDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
 import ua.vedroid.cinema.lib.Dao;
-import ua.vedroid.cinema.model.Movie;
+import ua.vedroid.cinema.model.CinemaHall;
 import ua.vedroid.cinema.util.HibernateUtil;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
-    static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
+public class CinemaHallDaoImpl implements CinemaHallDao {
+    static final Logger log = LogManager.getLogger(CinemaHallDaoImpl.class);
 
     @Override
-    public Movie add(Movie movie) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(cinemaHall);
             transaction.commit();
-            log.info("Added new movie: " + movie);
-            return movie;
+            log.info("Added new cinemaHall: " + cinemaHall);
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            String msg = "Can`t insert Movie entity " + movie;
+            String msg = "Can`t insert cinemaHall entity " + cinemaHall;
             log.error(msg, e);
             throw new DataProcessingException(msg, e);
         } finally {
@@ -42,12 +42,13 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
-            return getAllMoviesQuery.getResultList();
+            Query<CinemaHall> getAllCinemaHallQuery =
+                    session.createQuery("from CinemaHall", CinemaHall.class);
+            return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
-            String msg = "Error retrieving all movies";
+            String msg = "Error retrieving all CinemaHall";
             log.error(msg, e);
             throw new DataProcessingException(msg, e);
         }
