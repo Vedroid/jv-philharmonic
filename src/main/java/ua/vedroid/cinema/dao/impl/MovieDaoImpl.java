@@ -14,7 +14,7 @@ import ua.vedroid.cinema.util.HibernateUtil;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
+    private static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
 
     @Override
     public Movie add(Movie movie) {
@@ -31,9 +31,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            String msg = "Can`t insert Movie entity " + movie;
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Can`t insert Movie entity " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,9 +45,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            String msg = "Error retrieving all movies";
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Error retrieving all movies", e);
         }
     }
 }

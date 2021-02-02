@@ -15,7 +15,7 @@ import ua.vedroid.cinema.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("ua.vedroid.cinema");
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         // Movie

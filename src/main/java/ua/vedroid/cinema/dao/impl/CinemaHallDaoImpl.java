@@ -14,7 +14,7 @@ import ua.vedroid.cinema.util.HibernateUtil;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    static final Logger log = LogManager.getLogger(CinemaHallDaoImpl.class);
+    private static final Logger log = LogManager.getLogger(CinemaHallDaoImpl.class);
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -31,9 +31,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            String msg = "Can`t insert cinemaHall entity " + cinemaHall;
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Can`t insert cinemaHall entity " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -48,9 +46,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
-            String msg = "Error retrieving all CinemaHall";
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Error retrieving all CinemaHall", e);
         }
     }
 }

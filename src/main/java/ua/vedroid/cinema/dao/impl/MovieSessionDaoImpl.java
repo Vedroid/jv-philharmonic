@@ -15,7 +15,7 @@ import ua.vedroid.cinema.util.HibernateUtil;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    static final Logger log = LogManager.getLogger(MovieSessionDaoImpl.class);
+    private static final Logger log = LogManager.getLogger(MovieSessionDaoImpl.class);
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -32,9 +32,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            String msg = "Can`t insert movieSession entity " + movieSession;
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Can`t insert movieSession entity "
+                    + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -51,9 +50,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "left join fetch ms.movie", MovieSession.class);
             return getAllMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            String msg = "Error retrieving all MovieSession";
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Error retrieving all MovieSession", e);
         }
     }
 
@@ -70,10 +67,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAvailableMovieSessionQuery.setParameter("date", date.toString());
             return getAvailableMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            String msg = "Error retrieving available MovieSession where movieId=" + movieId
-                    + ", date=" + date;
-            log.error(msg, e);
-            throw new DataProcessingException(msg, e);
+            throw new DataProcessingException("Error retrieving available MovieSession "
+                    + "where movieId=" + movieId + ", date=" + date, e);
         }
     }
 }
