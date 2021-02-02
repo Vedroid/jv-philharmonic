@@ -1,4 +1,4 @@
-package ua.vedroid.cinema.service;
+package ua.vedroid.cinema.security;
 
 import ua.vedroid.cinema.exception.AuthenticationException;
 import ua.vedroid.cinema.model.User;
@@ -8,7 +8,8 @@ public interface AuthenticationService {
 
     /**
      * We should register a new user. New user entity will contains the email and password
-     * @param email - user email. should be unique for each user
+     *
+     * @param email    - user email. should be unique for each user
      * @param password - user password
      * @return new user instance
      */
