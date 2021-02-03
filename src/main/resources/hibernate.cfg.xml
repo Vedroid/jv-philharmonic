@@ -17,5 +17,7 @@
         <mapping class="ua.vedroid.cinema.model.MovieSession"/>
         <mapping class="ua.vedroid.cinema.model.CinemaHall"/>
         <mapping class="ua.vedroid.cinema.model.User"/>
+        <mapping class="ua.vedroid.cinema.model.ShoppingCart"/>
+        <mapping class="ua.vedroid.cinema.model.Ticket"/>
     </session-factory>
 </hibernate-configuration>
