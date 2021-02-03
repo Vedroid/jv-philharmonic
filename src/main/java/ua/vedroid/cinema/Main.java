@@ -5,13 +5,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.vedroid.cinema.exception.AuthenticationException;
 import ua.vedroid.cinema.lib.Injector;
 import ua.vedroid.cinema.model.CinemaHall;
 import ua.vedroid.cinema.model.Movie;
 import ua.vedroid.cinema.model.MovieSession;
+import ua.vedroid.cinema.model.User;
+import ua.vedroid.cinema.security.AuthenticationService;
 import ua.vedroid.cinema.service.CinemaHallService;
 import ua.vedroid.cinema.service.MovieService;
 import ua.vedroid.cinema.service.MovieSessionService;
+import ua.vedroid.cinema.service.UserService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("ua.vedroid.cinema");
@@ -87,10 +91,23 @@ public class Main {
         sessionService.add(session4);
         sessionService.add(session5);
 
+        UserService userService =
+                (UserService) injector.getInstance(UserService.class);
+
+        AuthenticationService authenticationService
+                = (AuthenticationService) injector.getInstance(AuthenticationService.class);
+
+        //Users
+        User alice = authenticationService.register("alice@gmail.com", "123");
+        User bob = authenticationService.register("bob@ukr.net", "qwerty");
+        User john = authenticationService.register("nogibator228@mail.ru", "jigurda");
+        User bruce = authenticationService.register("380671234567@i.ua", "1996");
+
         //Logs
         log.info("All movies: " + movieService.getAll());
         log.info("All halls: " + hallService.getAll());
         log.info("All sessions: " + sessionService.getAll());
+        log.info("All users: " + userService.getAll());
 
         List<MovieSession> availableSessionsGuardians01 = sessionService
                 .findAvailableSessions(guardians.getId(), LocalDate.parse("2021-02-01"));
@@ -105,5 +122,24 @@ public class Main {
         log.info("AvailableSessions(guardians, 2021-02-02): " + availableSessionsGuardians02);
         log.info("AvailableSessions(soul, 2021-02-01): " + availableSessionsSoul01);
         log.info("AvailableSessions(soul, 2021-02-02): " + availableSessionsSoul02);
+
+        try {
+            authenticationService.login(alice.getEmail(), "123");
+            log.info("Alice logged in");
+            authenticationService.login(bob.getEmail(), "qwerty");
+            log.info("Bob logged in");
+            authenticationService.login(john.getEmail(), "jigurda");
+            log.info("John logged in");
+            authenticationService.login(bruce.getEmail(), "1996");
+            log.info("Bruce logged in");
+        } catch (AuthenticationException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            authenticationService.login(alice.getEmail(), "wrongPassword");
+        } catch (AuthenticationException e) {
+            log.info("Alice logged failed, AuthenticationException: " + e.getMessage());
+        }
     }
 }

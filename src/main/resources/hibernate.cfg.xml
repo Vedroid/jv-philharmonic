@@ -16,5 +16,6 @@
         <mapping class="ua.vedroid.cinema.model.Movie"/>
         <mapping class="ua.vedroid.cinema.model.MovieSession"/>
         <mapping class="ua.vedroid.cinema.model.CinemaHall"/>
+        <mapping class="ua.vedroid.cinema.model.User"/>
     </session-factory>
 </hibernate-configuration>
