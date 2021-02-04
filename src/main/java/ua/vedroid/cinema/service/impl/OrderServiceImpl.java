@@ -1,6 +1,7 @@
 package ua.vedroid.cinema.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import ua.vedroid.cinema.dao.OrderDao;
 import ua.vedroid.cinema.lib.Inject;
@@ -31,11 +32,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(ShoppingCart shoppingCart) {
         Order order = new Order();
-        order.setTickets(shoppingCart.getTickets());
+        order.setTickets(new ArrayList<>(shoppingCart.getTickets()));
         order.setUser(shoppingCart.getUser());
         order.setOrderDate(LocalDateTime.now());
+        Order newOrder = add(order);
         shoppingCartService.clear(shoppingCart);
-        return add(order);
+        return newOrder;
     }
 
     @Override
