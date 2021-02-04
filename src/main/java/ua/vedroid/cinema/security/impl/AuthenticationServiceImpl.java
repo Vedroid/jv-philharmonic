@@ -6,6 +6,7 @@ import ua.vedroid.cinema.lib.Inject;
 import ua.vedroid.cinema.lib.Service;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.security.AuthenticationService;
+import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
 import ua.vedroid.cinema.util.HashUtil;
 
@@ -13,6 +14,8 @@ import ua.vedroid.cinema.util.HashUtil;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
+    @Inject
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -21,12 +24,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .equals(HashUtil.hashPassword(password, user.get().getSalt()))) {
             return user.get();
         }
-
         throw new AuthenticationException("Incorrect login or password");
     }
 
     @Override
     public User register(String email, String password) {
-        return userService.add(new User(email, password));
+        User user = userService.add(new User(email, password));
+        shoppingCartService.registerNewShoppingCart(user);
+        return user;
     }
 }

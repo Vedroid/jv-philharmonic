@@ -10,16 +10,18 @@ import ua.vedroid.cinema.lib.Injector;
 import ua.vedroid.cinema.model.CinemaHall;
 import ua.vedroid.cinema.model.Movie;
 import ua.vedroid.cinema.model.MovieSession;
+import ua.vedroid.cinema.model.ShoppingCart;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.security.AuthenticationService;
 import ua.vedroid.cinema.service.CinemaHallService;
 import ua.vedroid.cinema.service.MovieService;
 import ua.vedroid.cinema.service.MovieSessionService;
+import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("ua.vedroid.cinema");
-    private static final Logger log = LogManager.getLogger(Main.class);
+    private static final Logger log = LogManager.getRootLogger();
 
     public static void main(String[] args) {
         // Movie
@@ -31,6 +33,11 @@ public class Main {
 
         Movie guardians = new Movie();
         guardians.setTitle("Guardians of the Galaxy");
+
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        movieService.add(soul);
+        movieService.add(croods);
+        movieService.add(guardians);
 
         // CinemaHall
         CinemaHall hallVip = new CinemaHall();
@@ -44,6 +51,12 @@ public class Main {
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(80);
         hall.setDescription("3D");
+
+        CinemaHallService hallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        hallService.add(hallVip);
+        hallService.add(hallLux);
+        hallService.add(hall);
 
         //MovieSession
         MovieSession session1 = new MovieSession();
@@ -71,18 +84,6 @@ public class Main {
         session5.setCinemaHall(hall);
         session5.setShowTime(LocalDateTime.parse("2021-02-02T10:00"));
 
-        //Service
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        movieService.add(soul);
-        movieService.add(croods);
-        movieService.add(guardians);
-
-        CinemaHallService hallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        hallService.add(hall);
-        hallService.add(hallLux);
-        hallService.add(hallVip);
-
         MovieSessionService sessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         sessionService.add(session1);
@@ -91,23 +92,32 @@ public class Main {
         sessionService.add(session4);
         sessionService.add(session5);
 
-        UserService userService =
-                (UserService) injector.getInstance(UserService.class);
-
+        //Users
         AuthenticationService authenticationService
                 = (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-        //Users
         User alice = authenticationService.register("alice@gmail.com", "123");
         User bob = authenticationService.register("bob@ukr.net", "qwerty");
         User john = authenticationService.register("nogibator228@mail.ru", "jigurda");
         User bruce = authenticationService.register("380671234567@i.ua", "1996");
 
+        ShoppingCartService shoppingCartService
+                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        shoppingCartService.addSession(session1, alice);
+        shoppingCartService.addSession(session1, bob);
+        shoppingCartService.addSession(session2, john);
+        shoppingCartService.addSession(session3, alice);
+        shoppingCartService.addSession(session3, john);
+        shoppingCartService.addSession(session4, alice);
+
+        UserService userService =
+                (UserService) injector.getInstance(UserService.class);
         //Logs
         log.info("All movies: " + movieService.getAll());
         log.info("All halls: " + hallService.getAll());
         log.info("All sessions: " + sessionService.getAll());
         log.info("All users: " + userService.getAll());
+        log.info("All shoppingCarts: " + shoppingCartService.getAll());
 
         List<MovieSession> availableSessionsGuardians01 = sessionService
                 .findAvailableSessions(guardians.getId(), LocalDate.parse("2021-02-01"));
@@ -141,5 +151,10 @@ public class Main {
         } catch (AuthenticationException e) {
             log.info("Alice logged failed, AuthenticationException: " + e.getMessage());
         }
+
+        ShoppingCart byUser = shoppingCartService.getByUser(alice);
+        log.info("ShoppingCart by alice: " + byUser);
+        shoppingCartService.clear(byUser);
+        log.info("Cleared shopping cart: " + byUser);
     }
 }
