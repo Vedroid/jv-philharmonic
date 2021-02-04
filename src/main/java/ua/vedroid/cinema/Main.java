@@ -16,6 +16,7 @@ import ua.vedroid.cinema.security.AuthenticationService;
 import ua.vedroid.cinema.service.CinemaHallService;
 import ua.vedroid.cinema.service.MovieService;
 import ua.vedroid.cinema.service.MovieSessionService;
+import ua.vedroid.cinema.service.OrderService;
 import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
 
@@ -156,5 +157,14 @@ public class Main {
         log.info("ShoppingCart by alice: " + byUser);
         shoppingCartService.clear(byUser);
         log.info("Cleared shopping cart: " + byUser);
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+
+        shoppingCartService.getAll().forEach(orderService::completeOrder);
+
+        log.info("All orders: " + orderService.getAll());
+
+        log.info("Alice's order history (empty): " + orderService.getOrdersHistory(alice));
+        log.info("Bob's order history: " + orderService.getOrdersHistory(bob));
     }
 }
