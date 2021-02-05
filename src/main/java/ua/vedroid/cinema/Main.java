@@ -166,5 +166,7 @@ public class Main {
 
         log.info("Alice's order history (empty): " + orderService.getOrdersHistory(alice));
         log.info("Bob's order history: " + orderService.getOrdersHistory(bob));
+        log.info("Bruce's order history: " + orderService.getOrdersHistory(bruce));
+        log.info("John's order history: " + orderService.getOrdersHistory(john));
     }
 }
