@@ -4,24 +4,31 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.OrderDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
 import ua.vedroid.cinema.model.Order;
 import ua.vedroid.cinema.model.User;
-import ua.vedroid.cinema.util.HibernateUtil;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
     private static final Logger log = LogManager.getLogger(OrderDaoImpl.class);
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Order add(Order order) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
@@ -31,7 +38,7 @@ public class OrderDaoImpl implements OrderDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t insert order entity " + order, e);
+            throw new DataProcessingException("Can`t insert Order entity " + order, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,12 +48,13 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Order o "
                     + "left join fetch o.tickets t "
                     + "left join fetch t.movieSession ms "
                     + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall", Order.class).getResultList();
+                    + "left join fetch ms.cinemaHall", Order.class)
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all Orders", e);
         }
@@ -54,7 +62,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrdersHistory(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("select distinct o from Order o "
                     + "left join fetch o.tickets t "
                     + "left join fetch t.movieSession ms "
