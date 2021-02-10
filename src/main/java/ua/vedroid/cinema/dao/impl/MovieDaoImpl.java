@@ -6,13 +6,13 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.MovieDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.lib.Dao;
 import ua.vedroid.cinema.model.Movie;
 import ua.vedroid.cinema.util.HibernateUtil;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
     private static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
 

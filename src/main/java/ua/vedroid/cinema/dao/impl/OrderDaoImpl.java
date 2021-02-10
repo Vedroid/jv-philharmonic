@@ -5,14 +5,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.OrderDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.lib.Dao;
 import ua.vedroid.cinema.model.Order;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.util.HibernateUtil;
 
-@Dao
+@Repository
 public class OrderDaoImpl implements OrderDao {
     private static final Logger log = LogManager.getLogger(OrderDaoImpl.class);
 
