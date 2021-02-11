@@ -9,7 +9,7 @@ import ua.vedroid.cinema.service.CinemaHallService;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
-    private CinemaHallDao cinemaHallDao;
+    private final CinemaHallDao cinemaHallDao;
 
     @Autowired
     public CinemaHallServiceImpl(CinemaHallDao cinemaHallDao) {

@@ -9,7 +9,7 @@ import ua.vedroid.cinema.service.MovieService;
 
 @Service
 public class MovieServiceImpl implements MovieService {
-    private MovieDao movieDao;
+    private final MovieDao movieDao;
 
     @Autowired
     public MovieServiceImpl(MovieDao movieDao) {

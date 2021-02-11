@@ -10,7 +10,7 @@ import ua.vedroid.cinema.service.MovieSessionService;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    private MovieSessionDao movieSessionDao;
+    private final MovieSessionDao movieSessionDao;
 
     @Autowired
     public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
