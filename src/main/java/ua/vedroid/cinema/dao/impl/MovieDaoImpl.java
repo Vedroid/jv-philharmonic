@@ -58,10 +58,9 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Optional<Movie> getByTitle(String movieTitle) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session
-                    .createQuery("from Movie where title = :title", Movie.class)
+            return session.createQuery("from Movie where title = :title", Movie.class)
                     .setParameter("title", movieTitle)
-                    .getSingleResult());
+                    .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving Movie where title="
                     + movieTitle, e);
