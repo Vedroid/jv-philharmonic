@@ -4,24 +4,30 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.MovieDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.lib.Dao;
 import ua.vedroid.cinema.model.Movie;
-import ua.vedroid.cinema.util.HibernateUtil;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
     private static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public MovieDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Movie add(Movie movie) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();
@@ -41,11 +47,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
-            return getAllMoviesQuery.getResultList();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Movie", Movie.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all movies", e);
+            throw new DataProcessingException("Error retrieving all Movies", e);
         }
     }
 }

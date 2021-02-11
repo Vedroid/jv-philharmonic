@@ -2,16 +2,20 @@ package ua.vedroid.cinema.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.dao.MovieSessionDao;
-import ua.vedroid.cinema.lib.Inject;
-import ua.vedroid.cinema.lib.Service;
 import ua.vedroid.cinema.model.MovieSession;
 import ua.vedroid.cinema.service.MovieSessionService;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    @Inject
-    private MovieSessionDao movieSessionDao;
+    private final MovieSessionDao movieSessionDao;
+
+    @Autowired
+    public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
+        this.movieSessionDao = movieSessionDao;
+    }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {

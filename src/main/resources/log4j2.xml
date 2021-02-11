@@ -2,15 +2,21 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
         </Console>
 
         <Console name="DaoConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level DAO: - %msg%n"/>
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level DAO: - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
         </Console>
 
         <Console name="HibernateConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level Hibernate: - %msg%n"/>
+            <PatternLayout
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level Hibernate: - %msg%n}{FATAL=Bright Red, ERROR=Red, WARN=Yellow, INFO=Normal, DEBUG=Cyan, TRACE=Blue}"
+                    disableAnsi="false"/>
         </Console>
 
         <File name="HibernateFile" fileName="hibernate.log">

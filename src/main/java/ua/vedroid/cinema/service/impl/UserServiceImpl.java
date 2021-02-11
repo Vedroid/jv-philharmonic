@@ -2,17 +2,21 @@ package ua.vedroid.cinema.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.dao.UserDao;
-import ua.vedroid.cinema.lib.Inject;
-import ua.vedroid.cinema.lib.Service;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.service.UserService;
 import ua.vedroid.cinema.util.HashUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Inject
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User add(User user) {

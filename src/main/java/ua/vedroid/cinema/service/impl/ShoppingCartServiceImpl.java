@@ -2,10 +2,10 @@ package ua.vedroid.cinema.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.dao.ShoppingCartDao;
 import ua.vedroid.cinema.dao.TicketDao;
-import ua.vedroid.cinema.lib.Inject;
-import ua.vedroid.cinema.lib.Service;
 import ua.vedroid.cinema.model.MovieSession;
 import ua.vedroid.cinema.model.ShoppingCart;
 import ua.vedroid.cinema.model.Ticket;
@@ -14,10 +14,14 @@ import ua.vedroid.cinema.service.ShoppingCartService;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Inject
-    private ShoppingCartDao shoppingCartDao;
-    @Inject
-    private TicketDao ticketDao;
+    private final ShoppingCartDao shoppingCartDao;
+    private final TicketDao ticketDao;
+
+    @Autowired
+    public ShoppingCartServiceImpl(ShoppingCartDao shoppingCartDao, TicketDao ticketDao) {
+        this.shoppingCartDao = shoppingCartDao;
+        this.ticketDao = ticketDao;
+    }
 
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {

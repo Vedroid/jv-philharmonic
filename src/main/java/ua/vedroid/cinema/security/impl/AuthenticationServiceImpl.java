@@ -1,9 +1,9 @@
 package ua.vedroid.cinema.security.impl;
 
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.exception.AuthenticationException;
-import ua.vedroid.cinema.lib.Inject;
-import ua.vedroid.cinema.lib.Service;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.security.AuthenticationService;
 import ua.vedroid.cinema.service.ShoppingCartService;
@@ -12,10 +12,15 @@ import ua.vedroid.cinema.util.HashUtil;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
-    private UserService userService;
-    @Inject
-    private ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+
+    @Autowired
+    public AuthenticationServiceImpl(UserService userService,
+                                     ShoppingCartService shoppingCartService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
