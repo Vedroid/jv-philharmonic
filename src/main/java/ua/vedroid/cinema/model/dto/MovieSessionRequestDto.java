@@ -1,18 +1,9 @@
 package ua.vedroid.cinema.model.dto;
 
 public class MovieSessionRequestDto {
-    private Long id;
     private String movieTitle;
     private Long cinemaHallId;
     private String showTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getMovieTitle() {
         return movieTitle;

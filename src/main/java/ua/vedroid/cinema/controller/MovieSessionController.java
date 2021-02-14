@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,15 +48,19 @@ public class MovieSessionController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping
-    public String update(@RequestBody MovieSessionRequestDto dto) {
-        MovieSession movieSession = service.update(mapper.toEntity(dto));
-        return "MovieSession " + movieSession + " - updated";
+    @PutMapping("/{id}")
+    public String update(@PathVariable Long id, @RequestBody MovieSessionRequestDto dto) {
+        MovieSession movieSession = mapper.toEntity(dto);
+        movieSession.setId(id);
+        MovieSession updatedMovieSession = service.update(movieSession);
+        return "MovieSession " + updatedMovieSession + " - updated";
     }
 
-    @DeleteMapping
-    public String remove(@RequestBody MovieSessionRequestDto dto) {
-        MovieSession movieSession = service.delete(mapper.toEntity(dto));
-        return "MovieSession " + movieSession + " - removed";
+    @DeleteMapping("/{id}")
+    public String remove(@PathVariable Long id, @RequestBody MovieSessionRequestDto dto) {
+        MovieSession movieSession = mapper.toEntity(dto);
+        movieSession.setId(id);
+        MovieSession deletedMovieSession = service.delete(movieSession);
+        return "MovieSession " + deletedMovieSession + " - removed";
     }
 }
