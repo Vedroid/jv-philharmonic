@@ -19,10 +19,4 @@ public class ShoppingCartMapperImpl implements ShoppingCartMapper {
                 .collect(Collectors.toList()));
         return dto;
     }
-
-    // TODO
-    @Override
-    public ShoppingCart toEntity(ShoppingCartDto dto) {
-        return null;
-    }
 }

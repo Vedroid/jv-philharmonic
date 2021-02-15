@@ -20,10 +20,4 @@ public class OrderMapperImpl implements OrderMapper {
         dto.setOrderDate(order.getOrderDate().toString());
         return dto;
     }
-
-    // TODO
-    @Override
-    public Order toEntity(OrderDto dto) {
-        return null;
-    }
 }
