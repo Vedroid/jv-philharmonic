@@ -57,10 +57,8 @@ public class MovieSessionController {
     }
 
     @DeleteMapping("/{id}")
-    public String remove(@PathVariable Long id, @RequestBody MovieSessionRequestDto dto) {
-        MovieSession movieSession = mapper.toEntity(dto);
-        movieSession.setId(id);
-        MovieSession deletedMovieSession = service.delete(movieSession);
+    public String remove(@PathVariable Long id) {
+        MovieSession deletedMovieSession = service.delete(id);
         return "MovieSession " + deletedMovieSession + " - removed";
     }
 }
