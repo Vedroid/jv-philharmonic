@@ -2,6 +2,7 @@ package ua.vedroid.cinema.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -56,6 +57,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all MovieSession", e);
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.cinemaHall "
+                    + "left join fetch ms.movie "
+                    + "where ms.id = :id", MovieSession.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving MovieSession where Id=" + id, e);
         }
     }
 
