@@ -1,6 +1,7 @@
 package ua.vedroid.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -51,6 +52,16 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all CinemaHall", e);
+        }
+    }
+
+    @Override
+    public Optional<CinemaHall> getById(Long cinemaHallId) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(CinemaHall.class, cinemaHallId));
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving CinemaHall where id="
+                    + cinemaHallId, e);
         }
     }
 }

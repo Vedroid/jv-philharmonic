@@ -1,12 +1,12 @@
 package ua.vedroid.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.ShoppingCartDao;
@@ -63,17 +63,16 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
-    public ShoppingCart getByUser(User user) {
+    public Optional<ShoppingCart> getByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
-            Query<ShoppingCart> shoppingCartQuery = session
-                    .createQuery("select sc from ShoppingCart sc "
-                            + "left join fetch sc.tickets t "
-                            + "left join fetch t.movieSession ms "
-                            + "left join fetch ms.movie "
-                            + "left join fetch ms.cinemaHall "
-                            + "where sc.user.id = :userId", ShoppingCart.class)
-                    .setParameter("userId", user.getId());
-            return shoppingCartQuery.uniqueResult();
+            return session.createQuery("select sc from ShoppingCart sc "
+                    + "left join fetch sc.tickets t "
+                    + "left join fetch t.movieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall "
+                    + "where sc.user.id = :userId", ShoppingCart.class)
+                    .setParameter("userId", user.getId())
+                    .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving ShoppingCarts by user "
                     + user, e);

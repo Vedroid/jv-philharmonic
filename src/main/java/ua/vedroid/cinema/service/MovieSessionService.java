@@ -6,4 +6,8 @@ import ua.vedroid.cinema.model.MovieSession;
 
 public interface MovieSessionService extends GenericService<MovieSession> {
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+
+    MovieSession update(MovieSession movieSession);
+
+    MovieSession delete(Long id);
 }

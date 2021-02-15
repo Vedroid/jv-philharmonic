@@ -1,6 +1,7 @@
 package ua.vedroid.cinema.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -51,6 +52,18 @@ public class MovieDaoImpl implements MovieDao {
             return session.createQuery("from Movie", Movie.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all Movies", e);
+        }
+    }
+
+    @Override
+    public Optional<Movie> getByTitle(String movieTitle) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Movie where title = :title", Movie.class)
+                    .setParameter("title", movieTitle)
+                    .uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving Movie where title="
+                    + movieTitle, e);
         }
     }
 }
