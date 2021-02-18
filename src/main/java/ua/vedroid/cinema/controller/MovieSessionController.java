@@ -3,6 +3,7 @@ package ua.vedroid.cinema.controller;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,7 +50,7 @@ public class MovieSessionController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, @RequestBody MovieSessionRequestDto dto) {
+    public String update(@PathVariable Long id, @RequestBody @Valid MovieSessionRequestDto dto) {
         MovieSession movieSession = mapper.toEntity(dto);
         movieSession.setId(id);
         MovieSession updatedMovieSession = service.update(movieSession);

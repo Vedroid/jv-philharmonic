@@ -1,12 +1,14 @@
 package ua.vedroid.cinema.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.vedroid.cinema.model.dto.ShoppingCartDto;
+import ua.vedroid.cinema.model.User;
+import ua.vedroid.cinema.model.dto.ShoppingCartResponseDto;
 import ua.vedroid.cinema.service.MovieSessionService;
 import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
@@ -32,13 +34,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartDto getByUser(@RequestParam Long userId) {
-        return mapper.toDto(shoppingCartService.getByUser(userService.get(userId)));
+    public ShoppingCartResponseDto getByUser(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName()).get();
+        return mapper.toDto(shoppingCartService.getByUser(user));
     }
 
     @PostMapping("/movie-sessions")
-    public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
-        shoppingCartService.addSession(movieSessionService.get(movieSessionId),
-                userService.get(userId));
+    public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
+        User user = userService.findByEmail(authentication.getName()).get();
+        shoppingCartService.addSession(movieSessionService.get(movieSessionId), user);
     }
 }

@@ -1,7 +1,7 @@
 package ua.vedroid.cinema.service.mapper;
 
 import ua.vedroid.cinema.model.Order;
-import ua.vedroid.cinema.model.dto.OrderDto;
+import ua.vedroid.cinema.model.dto.OrderResponseDto;
 
-public interface OrderMapper extends GenericDtoMapper<Order, OrderDto> {
+public interface OrderMapper extends GenericDtoMapper<Order, OrderResponseDto> {
 }
