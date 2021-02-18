@@ -6,17 +6,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ua.vedroid.cinema.model.dto.UserRequestDto;
 import ua.vedroid.cinema.security.AuthenticationService;
-import ua.vedroid.cinema.service.mapper.UserMapper;
 
 @RestController
 public class AuthenticationController {
     private final AuthenticationService service;
-    private final UserMapper mapper;
 
     @Autowired
-    public AuthenticationController(AuthenticationService service, UserMapper mapper) {
+    public AuthenticationController(AuthenticationService service) {
         this.service = service;
-        this.mapper = mapper;
     }
 
     @PostMapping("/register")
