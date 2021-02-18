@@ -5,4 +5,6 @@ import ua.vedroid.cinema.model.User;
 
 public interface UserService extends GenericService<User> {
     Optional<User> findByEmail(String email);
+
+    User get(Long id);
 }

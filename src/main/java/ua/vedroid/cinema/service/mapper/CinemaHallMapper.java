@@ -4,6 +4,6 @@ import ua.vedroid.cinema.model.CinemaHall;
 import ua.vedroid.cinema.model.dto.CinemaHallRequestDto;
 import ua.vedroid.cinema.model.dto.CinemaHallResponseDto;
 
-public interface CinemaHallMapper extends DtoMapper<CinemaHall,
-        CinemaHallRequestDto, CinemaHallResponseDto> {
+public interface CinemaHallMapper extends GenericDtoMapper<CinemaHall, CinemaHallResponseDto>,
+        GenericEntityMapper<CinemaHall, CinemaHallRequestDto> {
 }
