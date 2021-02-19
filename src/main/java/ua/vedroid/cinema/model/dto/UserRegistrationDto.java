@@ -11,14 +11,10 @@ import ua.vedroid.cinema.lib.FieldMatch;
         message = "The password fields must match"
 )
 public class UserRegistrationDto {
-    private static final int PASS_MIN_LENGTH = 4;
-    private static final int PASS_MAX_LENGTH = 16;
-    private static final String PASS_MESSAGE = "Password size must be between " + PASS_MIN_LENGTH
-            + " and " + PASS_MAX_LENGTH;
     @Email
     private String email;
     @NotNull(message = "Field password must not be null")
-    @Size(min = PASS_MIN_LENGTH, max = PASS_MAX_LENGTH, message = PASS_MESSAGE)
+    @Size(min = 4, max = 16, message = "Password size must be between 4 and 16")
     private String password;
     @NotNull(message = "Field confirmPassword must not be null")
     private String confirmPassword;
