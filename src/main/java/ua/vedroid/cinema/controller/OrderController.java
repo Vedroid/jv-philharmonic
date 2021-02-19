@@ -3,12 +3,13 @@ package ua.vedroid.cinema.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.vedroid.cinema.model.dto.OrderDto;
+import ua.vedroid.cinema.model.User;
+import ua.vedroid.cinema.model.dto.OrderResponseDto;
 import ua.vedroid.cinema.service.OrderService;
 import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
@@ -32,17 +33,16 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderDto> getHistory(@RequestParam Long userId) {
-        return orderService.getOrdersHistory(userService.get(userId)).stream()
+    public List<OrderResponseDto> getHistory(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName()).get();
+        return orderService.getOrdersHistory(user).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/complete")
-    public OrderDto completeOrder(@RequestParam Long userId) {
-        return mapper.toDto(
-                orderService.completeOrder(
-                        shoppingCartService.getByUser(
-                                userService.get(userId))));
+    public OrderResponseDto completeOrder(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName()).get();
+        return mapper.toDto(orderService.completeOrder(shoppingCartService.getByUser(user)));
     }
 }

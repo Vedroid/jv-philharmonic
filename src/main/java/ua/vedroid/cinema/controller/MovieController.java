@@ -2,6 +2,7 @@ package ua.vedroid.cinema.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public void add(@RequestBody MovieRequestDto dto) {
+    public void add(@RequestBody @Valid MovieRequestDto dto) {
         service.add(mapper.toEntity(dto));
     }
 

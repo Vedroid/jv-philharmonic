@@ -2,7 +2,7 @@ package ua.vedroid.cinema.model.dto;
 
 import java.util.List;
 
-public class ShoppingCartDto {
+public class ShoppingCartResponseDto {
     private Long id;
     private List<Long> ticketIds;
 

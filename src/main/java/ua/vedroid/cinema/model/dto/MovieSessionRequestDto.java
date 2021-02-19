@@ -1,8 +1,15 @@
 package ua.vedroid.cinema.model.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 public class MovieSessionRequestDto {
+    @NotNull
     private String movieTitle;
+    @NotNull
+    @Positive
     private Long cinemaHallId;
+    @NotNull
     private String showTime;
 
     public String getMovieTitle() {

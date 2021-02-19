@@ -2,7 +2,7 @@ package ua.vedroid.cinema.model.dto;
 
 import java.util.List;
 
-public class OrderDto {
+public class OrderResponseDto {
     private Long id;
     private List<Long> ticketIds;
     private String orderDate;

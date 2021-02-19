@@ -1,6 +1,9 @@
 package ua.vedroid.cinema.model.dto;
 
+import javax.validation.constraints.Positive;
+
 public class CinemaHallRequestDto {
+    @Positive
     private int capacity;
     private String description;
 
