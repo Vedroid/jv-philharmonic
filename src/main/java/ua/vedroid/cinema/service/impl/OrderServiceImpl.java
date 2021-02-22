@@ -29,11 +29,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderDao.getAll();
-    }
-
-    @Override
     public Order completeOrder(ShoppingCart shoppingCart) {
         Order order = new Order();
         order.setTickets(new ArrayList<>(shoppingCart.getTickets()));

@@ -8,36 +8,36 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.vedroid.cinema.dao.UserDao;
+import ua.vedroid.cinema.dao.RoleDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.model.User;
+import ua.vedroid.cinema.model.Role;
 
 @Repository
-public class UserDaoImpl implements UserDao {
-    private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
+public class RoleDaoImpl implements RoleDao {
+    private static final Logger log = LogManager.getLogger(RoleDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserDaoImpl(SessionFactory sessionFactory) {
+    public RoleDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public User add(User user) {
+    public Role add(Role role) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(user);
+            session.save(role);
             transaction.commit();
-            log.info("Added new User: " + user);
-            return user;
+            log.info("Added new Role: " + role);
+            return role;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t insert User entity " + user, e);
+            throw new DataProcessingException("Can`t insert Role entity " + role, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -46,24 +46,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> get(Long id) {
+    public Optional<Role> getRoleByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(User.class, id));
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving User where id=" + id, e);
-        }
-    }
-
-    @Override
-    public Optional<User> findByEmail(String email) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from User u "
-                    + "inner join fetch u.roles "
-                    + "where u.email = :email", User.class)
-                    .setParameter("email", email)
+            return session.createQuery("from Role where roleName = :roleName", Role.class)
+                    .setParameter("roleName", Role.RoleName.valueOf(roleName))
                     .uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving User where email=" + email, e);
+            throw new DataProcessingException("Error retrieving Role where roleName="
+                    + roleName, e);
         }
     }
 }

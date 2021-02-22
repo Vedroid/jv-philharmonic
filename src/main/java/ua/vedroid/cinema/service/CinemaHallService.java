@@ -1,8 +1,12 @@
 package ua.vedroid.cinema.service;
 
-import ua.vedroid.cinema.dao.GenericDao;
+import java.util.List;
 import ua.vedroid.cinema.model.CinemaHall;
 
-public interface CinemaHallService extends GenericDao<CinemaHall> {
+public interface CinemaHallService {
+    CinemaHall add(CinemaHall cinemaHall);
+
+    List<CinemaHall> getAll();
+
     CinemaHall getById(Long cinemaHallId);
 }

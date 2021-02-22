@@ -1,6 +1,5 @@
 package ua.vedroid.cinema.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,11 +28,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User get(Long id) {
         return userDao.get(id).get();
-    }
-
-    @Override
-    public List<User> getAll() {
-        return userDao.getAll();
     }
 
     @Override

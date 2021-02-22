@@ -1,6 +1,5 @@
 package ua.vedroid.cinema.dao.impl;
 
-import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,20 +44,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public List<ShoppingCart> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select sc from ShoppingCart sc "
-                    + "left join fetch sc.tickets t "
-                    + "left join fetch t.movieSession ms "
-                    + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall ", ShoppingCart.class)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all ShoppingCarts", e);
         }
     }
 

@@ -1,6 +1,5 @@
 package ua.vedroid.cinema.dao.impl;
 
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -42,15 +41,6 @@ public class TicketDaoImpl implements TicketDao {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public List<Ticket> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Ticket", Ticket.class).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all Tickets", e);
         }
     }
 }

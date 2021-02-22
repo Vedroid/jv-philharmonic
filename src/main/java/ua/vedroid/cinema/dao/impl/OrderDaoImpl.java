@@ -47,20 +47,6 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Order o "
-                    + "left join fetch o.tickets t "
-                    + "left join fetch t.movieSession ms "
-                    + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall", Order.class)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all Orders", e);
-        }
-    }
-
-    @Override
     public List<Order> getOrdersHistory(User user) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("select distinct o from Order o "
