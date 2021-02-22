@@ -1,6 +1,6 @@
 package ua.vedroid.cinema.security.impl;
 
-import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.model.User;
@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User register(String email, String password) {
         User newUser = new User(email, password);
-        newUser.setRoles(List.of(roleService.getRoleByName("USER")));
+        newUser.setRoles(Set.of(roleService.getRoleByName("USER")));
         User user = userService.add(newUser);
         shoppingCartService.registerNewShoppingCart(user);
         return user;

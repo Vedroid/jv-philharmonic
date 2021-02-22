@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import ua.vedroid.cinema.model.MovieSession;
 
-public interface MovieSessionDao extends GenericDao<MovieSession> {
+public interface MovieSessionDao {
+    MovieSession add(MovieSession movieSession);
+
     Optional<MovieSession> get(Long id);
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);

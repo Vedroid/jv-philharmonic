@@ -49,18 +49,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.cinemaHall "
-                    + "left join fetch ms.movie", MovieSession.class)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all MovieSession", e);
-        }
-    }
-
-    @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from MovieSession ms "

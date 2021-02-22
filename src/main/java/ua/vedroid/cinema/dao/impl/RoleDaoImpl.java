@@ -1,6 +1,5 @@
 package ua.vedroid.cinema.dao.impl;
 
-import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,15 +42,6 @@ public class RoleDaoImpl implements RoleDao {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public List<Role> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Role", Role.class).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all Roles", e);
         }
     }
 

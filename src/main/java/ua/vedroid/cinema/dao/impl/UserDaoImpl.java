@@ -1,6 +1,5 @@
 package ua.vedroid.cinema.dao.impl;
 
-import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,15 +46,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from User", User.class).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all Users", e);
-        }
-    }
-
-    @Override
     public Optional<User> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(User.class, id));
@@ -68,7 +58,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from User u "
-                    + "left join fetch u.roles "
+                    + "inner join fetch u.roles "
                     + "where u.email = :email", User.class)
                     .setParameter("email", email)
                     .uniqueResultOptional();
