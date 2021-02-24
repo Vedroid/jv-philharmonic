@@ -11,34 +11,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.vedroid.cinema.dao.MovieDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.model.Movie;
+import ua.vedroid.cinema.model.Concert;
 
 @Repository
-public class MovieDaoImpl implements MovieDao {
-    private static final Logger log = LogManager.getLogger(MovieDaoImpl.class);
+public class ConcertDaoImpl implements MovieDao {
+    private static final Logger log = LogManager.getLogger(ConcertDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public MovieDaoImpl(SessionFactory sessionFactory) {
+    public ConcertDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public Movie add(Movie movie) {
+    public Concert add(Concert concert) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(concert);
             transaction.commit();
-            log.info("Added new movie: " + movie);
-            return movie;
+            log.info("Added new concert: " + concert);
+            return concert;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t insert Movie entity " + movie, e);
+            throw new DataProcessingException("Can`t insert Concert entity " + concert, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,22 +47,22 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<Concert> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Movie", Movie.class).getResultList();
+            return session.createQuery("from Concert", Concert.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all Movies", e);
         }
     }
 
     @Override
-    public Optional<Movie> getByTitle(String movieTitle) {
+    public Optional<Concert> getByTitle(String movieTitle) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Movie where title = :title", Movie.class)
+            return session.createQuery("from Concert where title = :title", Concert.class)
                     .setParameter("title", movieTitle)
                     .uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving Movie where title="
+            throw new DataProcessingException("Error retrieving Concert where title="
                     + movieTitle, e);
         }
     }

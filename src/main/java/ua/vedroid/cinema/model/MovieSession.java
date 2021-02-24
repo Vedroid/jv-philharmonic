@@ -18,7 +18,7 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Movie movie;
+    private Concert concert;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
@@ -33,12 +33,12 @@ public class MovieSession {
         this.id = id;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public Concert getMovie() {
+        return concert;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovie(Concert concert) {
+        this.concert = concert;
     }
 
     public CinemaHall getCinemaHall() {
@@ -61,7 +61,7 @@ public class MovieSession {
     public String toString() {
         return "MovieSession{"
                 + "id=" + id
-                + ", movie=" + movie
+                + ", concert=" + concert
                 + ", cinemaHall=" + cinemaHall
                 + ", showTime=" + showTime
                 + '}';

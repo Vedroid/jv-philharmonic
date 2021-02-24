@@ -4,30 +4,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.dao.MovieDao;
-import ua.vedroid.cinema.model.Movie;
-import ua.vedroid.cinema.service.MovieService;
+import ua.vedroid.cinema.model.Concert;
+import ua.vedroid.cinema.service.ConcertService;
 
 @Service
-public class MovieServiceImpl implements MovieService {
+public class ConcertServiceImpl implements ConcertService {
     private final MovieDao movieDao;
 
     @Autowired
-    public MovieServiceImpl(MovieDao movieDao) {
+    public ConcertServiceImpl(MovieDao movieDao) {
         this.movieDao = movieDao;
     }
 
     @Override
-    public Movie add(Movie movie) {
-        return movieDao.add(movie);
+    public Concert add(Concert concert) {
+        return movieDao.add(concert);
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<Concert> getAll() {
         return movieDao.getAll();
     }
 
     @Override
-    public Movie getByTitle(String movieTitle) {
+    public Concert getByTitle(String movieTitle) {
         return movieDao.getByTitle(movieTitle).get();
     }
 }

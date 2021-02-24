@@ -2,12 +2,12 @@ package ua.vedroid.cinema.dao;
 
 import java.util.List;
 import java.util.Optional;
-import ua.vedroid.cinema.model.Movie;
+import ua.vedroid.cinema.model.Concert;
 
 public interface MovieDao {
-    Movie add(Movie movie);
+    Concert add(Concert concert);
 
-    List<Movie> getAll();
+    List<Concert> getAll();
 
-    Optional<Movie> getByTitle(String movieTitle);
+    Optional<Concert> getByTitle(String movieTitle);
 }

@@ -1,17 +1,11 @@
 package ua.vedroid.cinema.model.dto;
 
-public class MovieResponseDto {
-    private Long id;
+import javax.validation.constraints.NotNull;
+
+public class ConcertRequestDto {
+    @NotNull
     private String title;
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
