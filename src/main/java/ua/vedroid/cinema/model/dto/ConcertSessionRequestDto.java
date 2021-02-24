@@ -1,18 +1,16 @@
 package ua.vedroid.cinema.model.dto;
 
-public class MovieSessionResponseDto {
-    private Long id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+public class ConcertSessionRequestDto {
+    @NotNull
     private String movieTitle;
-    private String cinemaHallId;
+    @NotNull
+    @Positive
+    private Long cinemaHallId;
+    @NotNull
     private String showTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getMovieTitle() {
         return movieTitle;
@@ -22,11 +20,11 @@ public class MovieSessionResponseDto {
         this.movieTitle = movieTitle;
     }
 
-    public String getCinemaHallId() {
+    public Long getCinemaHallId() {
         return cinemaHallId;
     }
 
-    public void setCinemaHallId(String cinemaHallId) {
+    public void setCinemaHallId(Long cinemaHallId) {
         this.cinemaHallId = cinemaHallId;
     }
 

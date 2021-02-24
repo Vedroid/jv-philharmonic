@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.vedroid.cinema.model.User;
 import ua.vedroid.cinema.model.dto.ShoppingCartResponseDto;
-import ua.vedroid.cinema.service.MovieSessionService;
+import ua.vedroid.cinema.service.ConcertSessionService;
 import ua.vedroid.cinema.service.ShoppingCartService;
 import ua.vedroid.cinema.service.UserService;
 import ua.vedroid.cinema.service.mapper.ShoppingCartMapper;
@@ -18,17 +18,17 @@ import ua.vedroid.cinema.service.mapper.ShoppingCartMapper;
 @RequestMapping("/shopping-carts")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
-    private final MovieSessionService movieSessionService;
+    private final ConcertSessionService concertSessionService;
     private final UserService userService;
     private final ShoppingCartMapper mapper;
 
     @Autowired
     public ShoppingCartController(ShoppingCartService shoppingCartService,
-                                  MovieSessionService movieSessionService,
+                                  ConcertSessionService concertSessionService,
                                   UserService userService,
                                   ShoppingCartMapper mapper) {
         this.shoppingCartService = shoppingCartService;
-        this.movieSessionService = movieSessionService;
+        this.concertSessionService = concertSessionService;
         this.userService = userService;
         this.mapper = mapper;
     }
@@ -42,6 +42,6 @@ public class ShoppingCartController {
     @PostMapping("/movie-sessions")
     public void addMovieSession(Authentication authentication, @RequestParam Long movieSessionId) {
         User user = userService.findByEmail(authentication.getName()).get();
-        shoppingCartService.addSession(movieSessionService.get(movieSessionId), user);
+        shoppingCartService.addSession(concertSessionService.get(movieSessionId), user);
     }
 }

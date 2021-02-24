@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.vedroid.cinema.dao.ShoppingCartDao;
 import ua.vedroid.cinema.dao.TicketDao;
-import ua.vedroid.cinema.model.MovieSession;
+import ua.vedroid.cinema.model.ConcertSession;
 import ua.vedroid.cinema.model.ShoppingCart;
 import ua.vedroid.cinema.model.Ticket;
 import ua.vedroid.cinema.model.User;
@@ -28,10 +28,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void addSession(MovieSession movieSession, User user) {
+    public void addSession(ConcertSession concertSession, User user) {
         ShoppingCart shoppingCart = getByUser(user);
         Ticket ticket = new Ticket();
-        ticket.setMovieSession(movieSession);
+        ticket.setMovieSession(concertSession);
         ticket.setUser(user);
         shoppingCart.getTickets().add(ticket);
         ticketDao.add(ticket);

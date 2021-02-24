@@ -15,33 +15,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.vedroid.cinema.model.MovieSession;
-import ua.vedroid.cinema.model.dto.MovieSessionRequestDto;
-import ua.vedroid.cinema.model.dto.MovieSessionResponseDto;
-import ua.vedroid.cinema.service.MovieSessionService;
-import ua.vedroid.cinema.service.mapper.MovieSessionMapper;
+import ua.vedroid.cinema.model.ConcertSession;
+import ua.vedroid.cinema.model.dto.ConcertSessionRequestDto;
+import ua.vedroid.cinema.model.dto.ConcertSessionResponseDto;
+import ua.vedroid.cinema.service.ConcertSessionService;
+import ua.vedroid.cinema.service.mapper.ConcertSessionMapper;
 
 @RestController
 @RequestMapping("/movie-sessions")
-public class MovieSessionController {
-    private final MovieSessionService service;
-    private final MovieSessionMapper mapper;
+public class ConcertSessionController {
+    private final ConcertSessionService service;
+    private final ConcertSessionMapper mapper;
 
     @Autowired
-    public MovieSessionController(MovieSessionService service,
-                                  MovieSessionMapper mapper) {
+    public ConcertSessionController(ConcertSessionService service,
+                                    ConcertSessionMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
 
     @PostMapping
-    public void add(@RequestBody MovieSessionRequestDto dto) {
+    public void add(@RequestBody ConcertSessionRequestDto dto) {
         service.add(mapper.toEntity(dto));
     }
 
     @GetMapping("/available")
-    public List<MovieSessionResponseDto> getAllAvailable(@RequestParam Long movieId,
-                                                         @RequestParam
+    public List<ConcertSessionResponseDto> getAllAvailable(@RequestParam Long movieId,
+                                                           @RequestParam
                                                          @DateTimeFormat(pattern = "dd.MM.yyyy")
                                                                  LocalDate date) {
         return service.findAvailableSessions(movieId, date).stream()
@@ -50,16 +50,16 @@ public class MovieSessionController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable Long id, @RequestBody @Valid MovieSessionRequestDto dto) {
-        MovieSession movieSession = mapper.toEntity(dto);
-        movieSession.setId(id);
-        MovieSession updatedMovieSession = service.update(movieSession);
-        return "MovieSession " + updatedMovieSession + " - updated";
+    public String update(@PathVariable Long id, @RequestBody @Valid ConcertSessionRequestDto dto) {
+        ConcertSession concertSession = mapper.toEntity(dto);
+        concertSession.setId(id);
+        ConcertSession updatedConcertSession = service.update(concertSession);
+        return "ConcertSession " + updatedConcertSession + " - updated";
     }
 
     @DeleteMapping("/{id}")
     public String remove(@PathVariable Long id) {
-        MovieSession deletedMovieSession = service.delete(id);
-        return "MovieSession " + deletedMovieSession + " - removed";
+        ConcertSession deletedConcertSession = service.delete(id);
+        return "ConcertSession " + deletedConcertSession + " - removed";
     }
 }

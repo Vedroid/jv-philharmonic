@@ -10,37 +10,37 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.vedroid.cinema.dao.MovieSessionDao;
+import ua.vedroid.cinema.dao.ConcertSessionDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.model.MovieSession;
+import ua.vedroid.cinema.model.ConcertSession;
 
 @Repository
-public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final Logger log = LogManager.getLogger(MovieSessionDaoImpl.class);
+public class ConcertSessionDaoImpl implements ConcertSessionDao {
+    private static final Logger log = LogManager.getLogger(ConcertSessionDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+    public ConcertSessionDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public MovieSession add(MovieSession movieSession) {
+    public ConcertSession add(ConcertSession concertSession) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.save(concertSession);
             transaction.commit();
-            log.info("Added new movieSession: " + movieSession);
-            return movieSession;
+            log.info("Added new concertSession: " + concertSession);
+            return concertSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t insert MovieSession entity "
-                    + movieSession, e);
+            throw new DataProcessingException("Can`t insert ConcertSession entity "
+                    + concertSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -49,53 +49,53 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public Optional<MovieSession> get(Long id) {
+    public Optional<ConcertSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from MovieSession ms "
+            return session.createQuery("from ConcertSession ms "
                     + "left join fetch ms.cinemaHall "
                     + "left join fetch ms.movie "
-                    + "where ms.id = :id", MovieSession.class)
+                    + "where ms.id = :id", ConcertSession.class)
                     .setParameter("id", id)
                     .uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving MovieSession where Id=" + id, e);
+            throw new DataProcessingException("Error retrieving ConcertSession where Id=" + id, e);
         }
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public List<ConcertSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from MovieSession ms "
+            return session.createQuery("from ConcertSession ms "
                     + "left join fetch ms.cinemaHall "
                     + "left join fetch ms.movie "
                     + "where ms.movie.id = :id "
-                    + "and to_char(ms.showTime, 'YYYY-MM-DD') = :date", MovieSession.class)
+                    + "and to_char(ms.showTime, 'YYYY-MM-DD') = :date", ConcertSession.class)
                     .setParameter("id", movieId)
                     .setParameter("date", date.toString())
                     .getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving available MovieSession "
+            throw new DataProcessingException("Error retrieving available ConcertSession "
                     + "where movieId=" + movieId + ", date=" + date, e);
         }
     }
 
     @Override
-    public MovieSession update(MovieSession movieSession) {
+    public ConcertSession update(ConcertSession concertSession) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.update(movieSession);
+            session.update(concertSession);
             transaction.commit();
-            log.info("Updated movieSession: " + movieSession);
-            return movieSession;
+            log.info("Updated concertSession: " + concertSession);
+            return concertSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t updated MovieSession entity "
-                    + movieSession, e);
+            throw new DataProcessingException("Can`t updated ConcertSession entity "
+                    + concertSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -104,24 +104,24 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession delete(Long id) {
+    public ConcertSession delete(Long id) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            MovieSession movieSession =
-                    session.createQuery("delete MovieSession where id = :id", MovieSession.class)
+            ConcertSession concertSession =
+                    session.createQuery("delete ConcertSession where id = :id", ConcertSession.class)
                             .setParameter("id", id)
                             .getSingleResult();
             transaction.commit();
-            log.info("Deleted movieSession: " + movieSession);
-            return movieSession;
+            log.info("Deleted concertSession: " + concertSession);
+            return concertSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t deleted MovieSession entity where id="
+            throw new DataProcessingException("Can`t deleted ConcertSession entity where id="
                     + id, e);
         } finally {
             if (session != null) {

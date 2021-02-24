@@ -9,12 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.vedroid.cinema.dao.MovieDao;
+import ua.vedroid.cinema.dao.ConcertDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
 import ua.vedroid.cinema.model.Concert;
 
 @Repository
-public class ConcertDaoImpl implements MovieDao {
+public class ConcertDaoImpl implements ConcertDao {
     private static final Logger log = LogManager.getLogger(ConcertDaoImpl.class);
     private final SessionFactory sessionFactory;
 
