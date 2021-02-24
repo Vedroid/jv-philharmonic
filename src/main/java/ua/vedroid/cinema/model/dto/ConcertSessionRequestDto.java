@@ -5,27 +5,27 @@ import javax.validation.constraints.Positive;
 
 public class ConcertSessionRequestDto {
     @NotNull
-    private String movieTitle;
+    private String concertTitle;
     @NotNull
     @Positive
-    private Long cinemaHallId;
+    private Long stageId;
     @NotNull
     private String showTime;
 
-    public String getMovieTitle() {
-        return movieTitle;
+    public String getConcertTitle() {
+        return concertTitle;
     }
 
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
+    public void setConcertTitle(String concertTitle) {
+        this.concertTitle = concertTitle;
     }
 
-    public Long getCinemaHallId() {
-        return cinemaHallId;
+    public Long getStageId() {
+        return stageId;
     }
 
-    public void setCinemaHallId(Long cinemaHallId) {
-        this.cinemaHallId = cinemaHallId;
+    public void setStageId(Long stageId) {
+        this.stageId = stageId;
     }
 
     public String getShowTime() {

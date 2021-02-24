@@ -15,7 +15,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "movie_session_id")
+    @JoinColumn(name = "concert_session_id")
     private ConcertSession concertSession;
     @ManyToOne
     private User user;
@@ -28,11 +28,11 @@ public class Ticket {
         this.id = id;
     }
 
-    public ConcertSession getMovieSession() {
+    public ConcertSession getConcertSession() {
         return concertSession;
     }
 
-    public void setMovieSession(ConcertSession concertSession) {
+    public void setConcertSession(ConcertSession concertSession) {
         this.concertSession = concertSession;
     }
 

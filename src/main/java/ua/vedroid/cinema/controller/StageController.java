@@ -15,7 +15,7 @@ import ua.vedroid.cinema.service.StageService;
 import ua.vedroid.cinema.service.mapper.StageMapper;
 
 @RestController
-@RequestMapping("/cinema-halls")
+@RequestMapping("/stages")
 public class StageController {
     private final StageService service;
     private final StageMapper mapper;
@@ -27,8 +27,8 @@ public class StageController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid StageRequestDto cinemaHallDto) {
-        service.add(mapper.toEntity(cinemaHallDto));
+    public void add(@RequestBody @Valid StageRequestDto stageRequestDto) {
+        service.add(mapper.toEntity(stageRequestDto));
     }
 
     @GetMapping

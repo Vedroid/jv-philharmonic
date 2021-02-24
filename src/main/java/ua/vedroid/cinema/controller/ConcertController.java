@@ -15,7 +15,7 @@ import ua.vedroid.cinema.service.ConcertService;
 import ua.vedroid.cinema.service.mapper.ConcertMapper;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/concerts")
 public class ConcertController {
     private final ConcertService service;
     private final ConcertMapper mapper;

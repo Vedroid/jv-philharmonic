@@ -22,7 +22,7 @@ import ua.vedroid.cinema.service.ConcertSessionService;
 import ua.vedroid.cinema.service.mapper.ConcertSessionMapper;
 
 @RestController
-@RequestMapping("/movie-sessions")
+@RequestMapping("/concert-sessions")
 public class ConcertSessionController {
     private final ConcertSessionService service;
     private final ConcertSessionMapper mapper;
@@ -40,11 +40,11 @@ public class ConcertSessionController {
     }
 
     @GetMapping("/available")
-    public List<ConcertSessionResponseDto> getAllAvailable(@RequestParam Long movieId,
+    public List<ConcertSessionResponseDto> getAllAvailable(@RequestParam Long concertId,
                                                            @RequestParam
                                                          @DateTimeFormat(pattern = "dd.MM.yyyy")
                                                                  LocalDate date) {
-        return service.findAvailableSessions(movieId, date).stream()
+        return service.findAvailableSessions(concertId, date).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }

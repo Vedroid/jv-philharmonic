@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import ua.vedroid.cinema.model.Stage;
 
-public interface StageHallDao {
+public interface StageDao {
     Stage add(Stage stage);
 
     List<Stage> getAll();
 
-    Optional<Stage> getById(Long cinemaHallId);
+    Optional<Stage> getById(Long stageId);
 }

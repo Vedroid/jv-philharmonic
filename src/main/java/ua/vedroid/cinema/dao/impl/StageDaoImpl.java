@@ -9,12 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.vedroid.cinema.dao.StageHallDao;
+import ua.vedroid.cinema.dao.StageDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
 import ua.vedroid.cinema.model.Stage;
 
 @Repository
-public class StageDaoImpl implements StageHallDao {
+public class StageDaoImpl implements StageDao {
     private static final Logger log = LogManager.getLogger(StageDaoImpl.class);
     private final SessionFactory sessionFactory;
 
@@ -56,12 +56,11 @@ public class StageDaoImpl implements StageHallDao {
     }
 
     @Override
-    public Optional<Stage> getById(Long cinemaHallId) {
+    public Optional<Stage> getById(Long stageId) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(Stage.class, cinemaHallId));
+            return Optional.ofNullable(session.get(Stage.class, stageId));
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving Stage where id="
-                    + cinemaHallId, e);
+            throw new DataProcessingException("Error retrieving Stage where id=" + stageId, e);
         }
     }
 }

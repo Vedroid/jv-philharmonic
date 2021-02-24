@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie_sessions")
+@Table(name = "concert_sessions")
 public class ConcertSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class ConcertSession {
     @ManyToOne(fetch = FetchType.LAZY)
     private Concert concert;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_hall_id")
+    @JoinColumn(name = "stage_id")
     private Stage stage;
     @Column(name = "show_time")
     private LocalDateTime showTime;
@@ -33,19 +33,19 @@ public class ConcertSession {
         this.id = id;
     }
 
-    public Concert getMovie() {
+    public Concert getConcert() {
         return concert;
     }
 
-    public void setMovie(Concert concert) {
+    public void setConcert(Concert concert) {
         this.concert = concert;
     }
 
-    public Stage getCinemaHall() {
+    public Stage getStage() {
         return stage;
     }
 
-    public void setCinemaHall(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 

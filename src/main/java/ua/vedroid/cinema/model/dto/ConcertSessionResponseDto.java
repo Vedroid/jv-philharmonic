@@ -2,8 +2,8 @@ package ua.vedroid.cinema.model.dto;
 
 public class ConcertSessionResponseDto {
     private Long id;
-    private String movieTitle;
-    private String cinemaHallId;
+    private String concertTitle;
+    private String stageId;
     private String showTime;
 
     public Long getId() {
@@ -14,20 +14,20 @@ public class ConcertSessionResponseDto {
         this.id = id;
     }
 
-    public String getMovieTitle() {
-        return movieTitle;
+    public String getConcertTitle() {
+        return concertTitle;
     }
 
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
+    public void setConcertTitle(String concertTitle) {
+        this.concertTitle = concertTitle;
     }
 
-    public String getCinemaHallId() {
-        return cinemaHallId;
+    public String getStageId() {
+        return stageId;
     }
 
-    public void setCinemaHallId(String cinemaHallId) {
-        this.cinemaHallId = cinemaHallId;
+    public void setStageId(String stageId) {
+        this.stageId = stageId;
     }
 
     public String getShowTime() {
