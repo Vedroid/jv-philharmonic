@@ -9,30 +9,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.vedroid.cinema.model.dto.CinemaHallRequestDto;
-import ua.vedroid.cinema.model.dto.CinemaHallResponseDto;
-import ua.vedroid.cinema.service.CinemaHallService;
-import ua.vedroid.cinema.service.mapper.CinemaHallMapper;
+import ua.vedroid.cinema.model.dto.StageRequestDto;
+import ua.vedroid.cinema.model.dto.StageResponseDto;
+import ua.vedroid.cinema.service.StageService;
+import ua.vedroid.cinema.service.mapper.StageMapper;
 
 @RestController
 @RequestMapping("/cinema-halls")
-public class CinemaHallController {
-    private final CinemaHallService service;
-    private final CinemaHallMapper mapper;
+public class StageController {
+    private final StageService service;
+    private final StageMapper mapper;
 
     @Autowired
-    public CinemaHallController(CinemaHallService service, CinemaHallMapper mapper) {
+    public StageController(StageService service, StageMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid CinemaHallRequestDto cinemaHallDto) {
+    public void add(@RequestBody @Valid StageRequestDto cinemaHallDto) {
         service.add(mapper.toEntity(cinemaHallDto));
     }
 
     @GetMapping
-    public List<CinemaHallResponseDto> getAll() {
+    public List<StageResponseDto> getAll() {
         return service.getAll().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());

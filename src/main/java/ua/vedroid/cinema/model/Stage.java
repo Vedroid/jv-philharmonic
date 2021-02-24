@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "cinema_halls")
-public class CinemaHall {
+public class Stage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +41,7 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        return "CinemaHall{"
+        return "Stage{"
                 + "id=" + id
                 + ", capacity=" + capacity
                 + ", description='" + description + '\''

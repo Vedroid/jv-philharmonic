@@ -9,36 +9,36 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.vedroid.cinema.dao.CinemaHallDao;
+import ua.vedroid.cinema.dao.StageHallDao;
 import ua.vedroid.cinema.exception.DataProcessingException;
-import ua.vedroid.cinema.model.CinemaHall;
+import ua.vedroid.cinema.model.Stage;
 
 @Repository
-public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Logger log = LogManager.getLogger(CinemaHallDaoImpl.class);
+public class StageDaoImpl implements StageHallDao {
+    private static final Logger log = LogManager.getLogger(StageDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+    public StageDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
+    public Stage add(Stage stage) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(cinemaHall);
+            session.save(stage);
             transaction.commit();
-            log.info("Added new cinemaHall: " + cinemaHall);
-            return cinemaHall;
+            log.info("Added new stage: " + stage);
+            return stage;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t insert CinemaHall entity " + cinemaHall, e);
+            throw new DataProcessingException("Can`t insert Stage entity " + stage, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,20 +47,20 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public List<CinemaHall> getAll() {
+    public List<Stage> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
+            return session.createQuery("from Stage", Stage.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all CinemaHall", e);
+            throw new DataProcessingException("Error retrieving all Stage", e);
         }
     }
 
     @Override
-    public Optional<CinemaHall> getById(Long cinemaHallId) {
+    public Optional<Stage> getById(Long cinemaHallId) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(CinemaHall.class, cinemaHallId));
+            return Optional.ofNullable(session.get(Stage.class, cinemaHallId));
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving CinemaHall where id="
+            throw new DataProcessingException("Error retrieving Stage where id="
                     + cinemaHallId, e);
         }
     }

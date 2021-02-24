@@ -6,19 +6,19 @@ import org.springframework.stereotype.Component;
 import ua.vedroid.cinema.model.ConcertSession;
 import ua.vedroid.cinema.model.dto.ConcertSessionRequestDto;
 import ua.vedroid.cinema.model.dto.ConcertSessionResponseDto;
-import ua.vedroid.cinema.service.CinemaHallService;
+import ua.vedroid.cinema.service.StageService;
 import ua.vedroid.cinema.service.ConcertService;
 import ua.vedroid.cinema.service.mapper.ConcertSessionMapper;
 
 @Component
 public class ConcertSessionMapperImpl implements ConcertSessionMapper {
     private final ConcertService concertService;
-    private final CinemaHallService cinemaHallService;
+    private final StageService stageService;
 
     @Autowired
-    public ConcertSessionMapperImpl(ConcertService concertService, CinemaHallService cinemaHallService) {
+    public ConcertSessionMapperImpl(ConcertService concertService, StageService stageService) {
         this.concertService = concertService;
-        this.cinemaHallService = cinemaHallService;
+        this.stageService = stageService;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ConcertSessionMapperImpl implements ConcertSessionMapper {
     public ConcertSession toEntity(ConcertSessionRequestDto dto) {
         ConcertSession concertSession = new ConcertSession();
         concertSession.setMovie(concertService.getByTitle(dto.getMovieTitle()));
-        concertSession.setCinemaHall(cinemaHallService.getById(dto.getCinemaHallId()));
+        concertSession.setCinemaHall(stageService.getById(dto.getCinemaHallId()));
         concertSession.setShowTime(LocalDateTime.parse(dto.getShowTime()));
         return concertSession;
     }

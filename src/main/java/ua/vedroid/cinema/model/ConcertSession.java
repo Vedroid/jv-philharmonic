@@ -21,7 +21,7 @@ public class ConcertSession {
     private Concert concert;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
-    private CinemaHall cinemaHall;
+    private Stage stage;
     @Column(name = "show_time")
     private LocalDateTime showTime;
 
@@ -41,12 +41,12 @@ public class ConcertSession {
         this.concert = concert;
     }
 
-    public CinemaHall getCinemaHall() {
-        return cinemaHall;
+    public Stage getCinemaHall() {
+        return stage;
     }
 
-    public void setCinemaHall(CinemaHall cinemaHall) {
-        this.cinemaHall = cinemaHall;
+    public void setCinemaHall(Stage stage) {
+        this.stage = stage;
     }
 
     public LocalDateTime getShowTime() {
@@ -62,7 +62,7 @@ public class ConcertSession {
         return "ConcertSession{"
                 + "id=" + id
                 + ", concert=" + concert
-                + ", cinemaHall=" + cinemaHall
+                + ", stage=" + stage
                 + ", showTime=" + showTime
                 + '}';
     }
