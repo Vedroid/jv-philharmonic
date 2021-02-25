@@ -34,11 +34,11 @@
             <AppenderRef ref="HibernateConsole"/>
         </Logger>
 
-        <Logger name="ua.vedroid.cinema.dao" level="INFO" additivity="false">
+        <Logger name="ua.vedroid.philharmonic.dao" level="INFO" additivity="false">
             <AppenderRef ref="DaoConsole"/>
         </Logger>
 
-        <Logger name="ua.vedroid.cinema.Main" level="DEBUG" additivity="false">
+        <Logger name="ua.vedroid.philharmonic.Main" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
