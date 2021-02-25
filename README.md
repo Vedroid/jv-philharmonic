@@ -3,7 +3,7 @@
 In this project used N-tier architecture with DB layer, DAO layer, Service layer and Controllers layer. <br>
 Project was developed according to SOLID principles with authorization and authentication.
 
-#### UML diagram that describes the relationship between the entities.
+#### UML diagram that describes the relationship between the entities
 
 <img src="https://github.com/Vedroid/images-in-readme/blob/main/project_philharmonic_uml.png" alt="project_philharmonic_uml" width="600"/>
 
@@ -34,7 +34,7 @@ controllers layer.
 
 ### Technologies Used
 
-- Java
+- Java 11
 - Spring Core, MVC, Security
 - Hibernate
 - Hibernate Validator
